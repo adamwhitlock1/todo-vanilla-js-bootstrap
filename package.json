@@ -1,5 +1,5 @@
 {
-  "name": "quiz-vanilla-js",
+  "name": "todo-vanilla-js",
   "version": "1.0.0",
   "description": "This is a static template with no bundling. Creates a simple quiz flow and tells results at the end",
   "main": "index.html",
