@@ -5,66 +5,35 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Static Template</title>
+	<title>Simple Quiz</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="style.css">
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 
 	</script>
+
+
+
+</head>
+
+<body>
+	<h1 id="myHeading">To-Don't</h1>
+	<p>A simple interactive to-do list</p>
+
+	<div id="list-name-wrapper">
+		<input type="text" class="listName" placeholder="type list name here">
+    <button class="change-item" onclick="commitEdit()">Change list name</button>
+  </div>
+
+  <input type="text" class="listItem" placeholder="add list items">
+  <button class="listItem" onclick="addToList()">Add list item</button>
+
+  <ul id="list"></ul>
 
 	<script src="index.js">
 
 	</script>
 
-</head>
-
-<body>
-	<div class="container mt-4">
-		<div class="row" id="quiz-section">
-			<div class="col-md-12">
-				<h2>Welcome to the dopest quiz on the interwebs.</h2>
-				<p id="question"></p>
-				<form onsubmit="return submitFunc(event)" class="form-inline">
-					<input class="form-control" type="text" name="answerText" placeholder="type answer here">
-					<button class="btn btn-primary ml-3">Submit</button>
-				</form>
-			</div>
-		</div>
-
-		<div class="row" id="reload" style="display: none">
-			<div class="col-md-12">
-				<button class="btn btn-success" onclick="location.reload(true)">Retry quiz</button>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-md-12">
-				<div id="results">
-				</div>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-md-6">
-				<div id="correct">
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-md-6">
-				<div id="incorrect">
-				</div>
-			</div>
-		</div>
-
-	</div>
-	
-
 </body>
-
-<script>
-
-
-</script>
-
 </html>

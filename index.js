@@ -1,101 +1,98 @@
-let question_data = {
-  question_texts: [
-    ["What is the capital of France?", "paris"],
-    ["How many legs does a spider have?", "8"],
-    ["What is coffee made from?", "beans"]
-  ],
-  current_index: 0,
-  correct: [],
-  incorrect: []
+//Get variables for input fields, buttons, and checkboxes
+const getChangeElements = document.querySelector(".listName");
+const getListElements = document.getElementsByClassName("listItem");
+const getCheckBoxes = document.querySelectorAll("[type=checkbox]");
+const getListItems = document.querySelectorAll("li.listItem");
+const listTitle = getChangeElements[0];
+const changeInput = getChangeElements[1];
+const changeButton = getChangeElements[2];
+
+const listButton = getListElements[1];
+
+//Array to build list items
+const listItems = [{ text: "pepper" }, { text: "apple" }, { text: "orange" }];
+
+//Global variables
+
+//Allows user to change and toggle list description using input field and button
+
+//Allows user to add items to list using onclick attribute to run function
+const addToList = () => {
+  let listInput = getListElements[0];
+  let addItem = {
+    text: listInput.value
+  };
+  listItems.push(addItem);
+  listInput.value = "";
+  renderList();
 };
 
-function setUpQuestion(index) {
-  document.getElementById("question").innerHTML =
-    question_data.question_texts[index][0];
-}
-
-function checkAnswer(answer, index) {
-  if (answer === question_data.question_texts[index][1]) {
-    question_data.correct.push([
-      answer,
-      question_data.question_texts[index][0]
-    ]);
-  } else {
-    question_data.incorrect.push([
-      answer,
-      question_data.question_texts[index][0]
-    ]);
-  }
-
-  if (question_data.current_index < question_data.question_texts.length - 1) {
-    question_data.current_index++;
-    setUpQuestion(question_data.current_index);
-  } else {
-    print(results(), "results");
-    if (question_data.correct.length > 0) {
-      print(buildList(question_data.correct, "Corrent Answers"), "correct");
-    }
-    if (question_data.incorrect.length > 0) {
-      print(
-        buildList(question_data.incorrect, "Incorrect Answers"),
-        "incorrect"
-      );
-    }
-    document
-      .getElementById("quiz-section")
-      .setAttribute("style", "display: none");
-    document.getElementById("reload").setAttribute("style", "display: block");
-  }
-}
-
-function print(message, element) {
-  let outputDiv = document.getElementById(element);
-  outputDiv.innerHTML = message;
-}
-
-function submitFunc(event) {
-  event.preventDefault();
-  checkAnswer(
-    event.target.answerText.value.toLowerCase(),
-    question_data.current_index
-  );
-  event.target.answerText.value = "";
-}
-
-function print(message, element) {
-  let outputDiv = document.getElementById(element);
-  outputDiv.innerHTML = message;
-}
-
-function buildList(array, title) {
-  let list = "<h2>" + title + "</h2><ol>";
-  for (let i = 0; i < array.length; i++) {
-    list += "<li>" + array[i][1] + " " + array[i][0] + "</li>";
-  }
-  list += "</ol>";
-  return list;
-}
-
-function results() {
-  let write;
-  if (question_data.correct.length >= 2) {
-    write =
-      "Great! You got " +
-      question_data.correct.length +
-      " question(s) right and " +
-      question_data.incorrect.length +
-      " question(s) wrong. Great work!";
-  } else {
-    write =
-      "Too bad! You got " +
-      question_data.incorrect.length +
-      " question(s) wrong and only " +
-      question_data.correct.length +
-      " question(s) right. Better luck next time.";
-  }
-  return write;
-}
-
-window.onload = function() {
-  setUpQuestion(question_data.current_index);
+const deleteItem = index => {
+  listItems.splice(index, 1);
+  renderList();
 };
+
+//Crosses out checked list items
+const markDone = index => {
+  let checkedElement = document.querySelector(`#list #li-${index} .listItem`);
+  checkedElement.classList.toggle("done");
+};
+
+const editItem = index => {
+  let editInput = document.querySelector(".listName");
+  editInput.setAttribute("id", index);
+  console.log("Editing " + index);
+  let editWrapper = document.getElementById("list-name-wrapper");
+  editWrapper.classList.add("show");
+};
+
+const commitEdit = () => {
+  let indexToChange = parseInt(document.querySelector(".listName").id) - 1;
+  let newText = document.querySelector(".listName").value;
+  console.log(newText);
+  listItems[indexToChange].text = newText;
+  renderList();
+  document.querySelector(".listName").value = "";
+  let editWrapper = document.getElementById("list-name-wrapper");
+  editWrapper.classList.toggle("show");
+};
+
+// function to render the list of items
+const renderList = () => {
+  document.getElementById("list").innerHTML = "";
+  for (let i = 0; i < listItems.length; i++) {
+    let divNode = document.createElement("DIV");
+    divNode.id = `li-${i}`;
+    divNode.className = "item-wrapper";
+    document.getElementById("list").appendChild(divNode);
+    divNode.innerHTML = `<span>${i + 1} </span>`;
+
+    let node = document.createElement("LI");
+    let textnode = document.createTextNode(listItems[i].text);
+    node.appendChild(textnode);
+    node.classList.add("listItem");
+    divNode.appendChild(node);
+
+    let buttonNode = document.createElement("BUTTON");
+    let buttonText = document.createTextNode("X");
+    buttonNode.setAttribute("onclick", `deleteItem(${i})`);
+    buttonNode.appendChild(buttonText);
+    buttonNode.className = "deleteLI";
+    divNode.appendChild(buttonNode);
+
+    let editNode = document.createElement("BUTTON");
+    let editText = document.createTextNode("Edit " + listItems[i].text);
+    editNode.setAttribute("onclick", `editItem(${i + 1})`);
+    editNode.appendChild(editText);
+    editNode.className = "editLI";
+    divNode.appendChild(editNode);
+
+    let checkboxNode = document.createElement("INPUT");
+    checkboxNode.className = "taskDone";
+    checkboxNode.type = "checkbox";
+    checkboxNode.setAttribute("onclick", `markDone(${i})`);
+    divNode.appendChild(checkboxNode);
+  }
+};
+
+renderList();
