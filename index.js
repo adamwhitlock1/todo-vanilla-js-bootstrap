@@ -12,10 +12,6 @@ const listButton = getListElements[1];
 //Array to build list items
 const listItems = [{ text: "pepper" }, { text: "apple" }, { text: "orange" }];
 
-//Global variables
-
-//Allows user to change and toggle list description using input field and button
-
 //Allows user to add items to list using onclick attribute to run function
 const addToList = () => {
   let listInput = getListElements[0];
@@ -59,12 +55,20 @@ const commitEdit = () => {
 
 // function to render the list of items
 const renderList = () => {
+  // initially clear out any existing content in the element with id "list"
+  // this is useful when calling this function after adding or deleting items
   document.getElementById("list").innerHTML = "";
+  // set up a loop to loop through all the list items in the listItems array
   for (let i = 0; i < listItems.length; i++) {
+    // create a div element to eventually be added to the dom
     let divNode = document.createElement("DIV");
+    // add an id to the div of "li-1" or "li-2" etc based on loop index
     divNode.id = `li-${i}`;
+    // add a class to the div
     divNode.className = "item-wrapper";
+    // now actually add the div to the dom by appending it to the element with id "list"
     document.getElementById("list").appendChild(divNode);
+    // setting it's initial inner html content to have a simple span with a number inside as the todo number
     divNode.innerHTML = `<span>${i + 1} </span>`;
 
     let node = document.createElement("LI");
